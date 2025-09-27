@@ -30,11 +30,20 @@ export default function HeroSection({ isDarkMode, toggleTheme }: HeroSectionProp
         </h1>
         
         <p 
-          className="text-lg sm:text-xl text-muted-foreground leading-relaxed"
+          className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8"
           data-testid="text-intro-message"
         >
           Ahoj, učím se vibe coding
         </p>
+        
+        <Button
+          size="lg"
+          className="text-base px-8 py-3"
+          onClick={() => console.log('Chci zjistit více clicked!')}
+          data-testid="button-learn-more"
+        >
+          Chci zjistit více
+        </Button>
       </div>
     </div>
   );
