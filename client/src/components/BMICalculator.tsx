@@ -1,138 +1,45 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Calculator } from "lucide-react";
-
-interface BMIResult {
-  bmi: number;
-  category: string;
-  color: "default" | "secondary" | "destructive" | "outline";
-}
 
 export default function BMICalculator() {
-  const [weight, setWeight] = useState<string>("");
   const [height, setHeight] = useState<string>("");
-  const [result, setResult] = useState<BMIResult | null>(null);
+  const [weight, setWeight] = useState<string>("");
 
-  const calculateBMI = () => {
-    const weightNum = parseFloat(weight);
-    const heightNum = parseFloat(height);
-    
-    if (!weightNum || !heightNum || weightNum <= 0 || heightNum <= 0) {
-      console.log('Invalid input values');
-      return;
-    }
+  const h = parseFloat(height);
+  const w = parseFloat(weight);
+  const bmi = h > 0 && w > 0 ? w / Math.pow(h / 100, 2) : null;
 
-    // Convert height from cm to meters if needed
-    const heightInMeters = heightNum > 3 ? heightNum / 100 : heightNum;
-    const bmi = weightNum / (heightInMeters * heightInMeters);
-    
-    let category: string;
-    let color: BMIResult["color"];
-    
-    if (bmi < 18.5) {
-      category = "Podváha";
-      color = "secondary";
-    } else if (bmi < 25) {
-      category = "Normální váha";
-      color = "default";
-    } else if (bmi < 30) {
-      category = "Nadváha";
-      color = "outline";
-    } else {
-      category = "Obezita";
-      color = "destructive";
-    }
-
-    setResult({
-      bmi: Math.round(bmi * 10) / 10,
-      category,
-      color
-    });
-
-    console.log(`BMI calculated: ${Math.round(bmi * 10) / 10}, Category: ${category}`);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    calculateBMI();
-  };
+  const category =
+    bmi == null
+      ? ""
+      : bmi < 18.5
+      ? "Podváha"
+      : bmi < 25
+      ? "Normální váha"
+      : bmi < 30
+      ? "Nadváha"
+      : "Obezita";
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="text-center">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <Calculator className="h-6 w-6 text-primary" />
-          <CardTitle>BMI Kalkulačka</CardTitle>
-        </div>
-        <CardDescription>
-          Zadejte svou váhu a výšku pro výpočet BMI
-        </CardDescription>
-      </CardHeader>
-      
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="weight" data-testid="label-weight">
-              Váha (kg)
-            </Label>
-            <Input
-              id="weight"
-              type="number"
-              placeholder="např. 70"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              data-testid="input-weight"
-              step="0.1"
-              min="1"
-              max="500"
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="height" data-testid="label-height">
-              Výška (cm nebo m)
-            </Label>
-            <Input
-              id="height"
-              type="number"
-              placeholder="např. 175 nebo 1.75"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-              data-testid="input-height"
-              step="0.01"
-              min="0.5"
-              max="300"
-            />
-          </div>
-          
-          <Button 
-            type="submit" 
-            className="w-full"
-            data-testid="button-calculate-bmi"
-            disabled={!weight || !height}
-          >
-            Vypočítat BMI
-          </Button>
-        </form>
+    <div className="mt-8 p-6 rounded-2xl border">
+      <h2 className="text-2xl font-semibold mb-4">BMI kalkulačka</h2>
 
-        {result && (
-          <div className="mt-6 p-4 border rounded-lg bg-muted/50" data-testid="bmi-result">
-            <div className="text-center space-y-2">
-              <p className="text-sm text-muted-foreground">Váš BMI je:</p>
-              <p className="text-3xl font-bold text-foreground" data-testid="bmi-value">
-                {result.bmi}
-              </p>
-              <Badge variant={result.color} data-testid="bmi-category">
-                {result.category}
-              </Badge>
-            </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
+      <div className="grid gap-3">
+        <label className="grid gap-1">
+          <span>Výška (cm)</span>
+          <input
+            type="number"
+            value={height}
+            onChange={(e) => setHeight(e.target.value)}
+            className="border rounded px-3 py-2"
+            placeholder="např. 180"
+          />
+        </label>
+
+        <label className="grid gap-1">
+          <span>Váha (kg)</span>
+          <input
+            type="number"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            className="border rounded px-3 py-2"
+            plac
