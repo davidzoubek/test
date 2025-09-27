@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
+import BMICalculator from "./BMICalculator";
 
 interface HeroSectionProps {
   isDarkMode: boolean;
@@ -21,29 +22,37 @@ export default function HeroSection({ isDarkMode, toggleTheme }: HeroSectionProp
       </Button>
 
       {/* Main content centered */}
-      <div className="text-center max-w-2xl">
-        <h1 
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-foreground"
-          data-testid="text-main-headline"
-        >
-          Moje první stránka
-        </h1>
-        
-        <p 
-          className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8"
-          data-testid="text-intro-message"
-        >
-          Ahoj, učím se vibe coding
-        </p>
-        
-        <Button
-          size="lg"
-          className="text-base px-8 py-3"
-          onClick={() => console.log('Chci zjistit více clicked!')}
-          data-testid="button-learn-more"
-        >
-          Chci zjistit více
-        </Button>
+      <div className="text-center max-w-2xl space-y-12">
+        {/* Hero section */}
+        <div>
+          <h1 
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-foreground"
+            data-testid="text-main-headline"
+          >
+            Moje první stránka
+          </h1>
+          
+          <p 
+            className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8"
+            data-testid="text-intro-message"
+          >
+            Ahoj, učím se vibe coding
+          </p>
+          
+          <Button
+            size="lg"
+            className="text-base px-8 py-3"
+            onClick={() => console.log('Chci zjistit více clicked!')}
+            data-testid="button-learn-more"
+          >
+            Chci zjistit více
+          </Button>
+        </div>
+
+        {/* BMI Calculator section */}
+        <div>
+          <BMICalculator />
+        </div>
       </div>
     </div>
   );
